@@ -1,8 +1,13 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import userModel from "../model/user.model";
 
-export const getAllUsers = (req: Request, res: Response) => {
-    res.status(200).send('Get: Get all users');
+export const getAllUsers = async (req: Request, res: Response) => {
+    try {
+        const user = await userModel.find();
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json(error);
+    }
 }
 
 export const createUser = async (req: Request, res: Response) => {
@@ -12,14 +17,11 @@ export const createUser = async (req: Request, res: Response) => {
         if (!name || !email || !password) throw new Error('Missing fields');
 
         const newUser = await userModel.create({ name, email, password });
+
         res.status(201).json(newUser);
-
-        res.status(200).send('Create: User created');
-
     } catch (error) {
         res.status(500).json(error);
     }
-
 };
 
 export const getUserbyId = async (req: Request, res: Response) => {
@@ -30,23 +32,23 @@ export const getUserbyId = async (req: Request, res: Response) => {
 
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).json(error)
+        res.status(500).json(error);
     }
 };
 
 export const updateUser = async (req: Request, res: Response) => {
     const { userId } = req.params;
-    const { name, email } = req.body
+    const { name, email, password } = req.body;
 
     try {
         const user = await userModel.findByIdAndUpdate({ _id: userId },
-            { $set: { name: name, email: email } },
+            { $set: { name: name, email: email, password: password } },
             { new: true }
         );
 
         res.status(201).json(user);
     } catch (error) {
-        res.status(500).json(error)
+        res.status(500).json(error);
     }
 };
 
@@ -58,16 +60,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 
         res.status(201).json(user);
 
-        res.status(200).send('Delete: User deleted');
     } catch (error) {
         res.status(500).json(error);
     }
 };
-
-// export const deleteUser = (req: Request, res: Response) => {
-//     const {
-//         params: { userId }
-//     } = req;
-//     if (!userId) res.status(500).send('Not found')
-//     res.status(200).send(`Delete: Delete user ${userId}`);
-// }

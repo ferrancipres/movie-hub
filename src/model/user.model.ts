@@ -1,4 +1,5 @@
-import { Document, model, Schema } from 'mongoose'
+import { model, Schema } from 'mongoose'
+// He  quitado Document..si falla lo vuelvo  a poner
 
 interface IUserDocument {
     name: string;
@@ -21,7 +22,10 @@ const userSchema = new Schema<IUserDocument>({
     },
     password: {
         type: String,
-        required: [true, 'Password is required']
+        required: [true, 'Password is required'],
+        trim: true,
+        minlength: [2, "The password is too short"],
+        maxlength: [20, "The password is too short"]
     },
 },
     { timestamps: true, versionKey: false }
@@ -29,3 +33,4 @@ const userSchema = new Schema<IUserDocument>({
 
 const userModel = model<IUserDocument>('user', userSchema);
 export default userModel;
+

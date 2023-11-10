@@ -46,5 +46,5 @@ const CONFIG: TConfig = {
     }
 };
 
-console.log('>>>CONFIG', CONFIG[ENV])
-export default CONFIG[ENV]
+console.log('>>>CONFIG', CONFIG[ENV]);
+export default CONFIG[ENV];

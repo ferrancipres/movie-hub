@@ -5,4 +5,4 @@ const connect = () => {
     return mongoose.connect(config.db.URI)
 }
 
-export default connect
+export default connect;
