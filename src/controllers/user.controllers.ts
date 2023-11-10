@@ -13,7 +13,8 @@ export const createUser = async (req: Request, res: Response) => {
 
         const newUser = await userModel.create({ name, email, password });
         res.status(201).json(newUser);
-        // res.status(200).send('Create: User created');
+
+        res.status(200).send('Create: User created');
 
     } catch (error) {
         res.status(500).json(error);
@@ -57,25 +58,11 @@ export const deleteUser = async (req: Request, res: Response) => {
 
         res.status(201).json(user);
 
-        // Mueve esta línea aquí dentro del bloque try.
-        // res.status(200).send('Delete: User deleted');
+        res.status(200).send('Delete: User deleted');
     } catch (error) {
         res.status(500).json(error);
     }
 };
-
-// export const deleteUser = async (req: Request, res: Response) => {
-//     const { userId } = req.params;
-
-//     try {
-//         const user = await userModel.findByIdAndDelete({ _id: userId });
-
-//         res.status(201).json(user);
-//     } catch (error) {
-//         res.status(500).json(error)
-//     }
-//     res.status(200).send('Delete: User  deleted');
-// }
 
 // export const deleteUser = (req: Request, res: Response) => {
 //     const {
