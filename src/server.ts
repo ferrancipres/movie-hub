@@ -17,10 +17,5 @@ app.use('/user', userRoutes);
 // middleware to allow create a user route, y routee todo el trafico hasta allí
 app.use('/movie', movieRoutes)
 
-// TEST 
-app.use('/genre', () => {
-    console.log('This is a test')
-})
-
 // export default
 export default app;
