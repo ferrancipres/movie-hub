@@ -24,7 +24,7 @@ export const createUser = async (req: Request, res: Response) => {
     }
 };
 
-export const getUserbyId = async (req: Request, res: Response) => {
+export const getUserById = async (req: Request, res: Response) => {
     const { userId } = req.params;
 
     try {
