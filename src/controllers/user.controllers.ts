@@ -5,20 +5,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
     try {
         const user = await userModel.find();
         res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json(error);
-    }
-}
 
-export const createUser = async (req: Request, res: Response) => {
-    const { name, email, password } = req.body;
-
-    try {
-        if (!name || !email || !password) throw new Error('Missing fields');
-
-        const newUser = await userModel.create({ name, email, password });
-
-        res.status(201).json(newUser);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -31,6 +18,20 @@ export const getUserById = async (req: Request, res: Response) => {
         const user = await userModel.findById({ _id: userId });
 
         res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
+export const createUser = async (req: Request, res: Response) => {
+    const { name, email, password } = req.body;
+
+    try {
+        if (!name || !email || !password) throw new Error('Missing fields');
+
+        const newUser = await userModel.create({ name, email, password });
+
+        res.status(201).json(newUser);
     } catch (error) {
         res.status(500).json(error);
     }

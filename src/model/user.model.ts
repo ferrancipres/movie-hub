@@ -10,24 +10,25 @@ interface IUserDocument {
     updatedAt?: Date;
 }
 
-const userSchema = new Schema<IUserDocument>({
-    name: {
-        type: String,
-        required: [true, 'Name is required']
+const userSchema = new Schema<IUserDocument>(
+    {
+        name: {
+            type: String,
+            required: [true, 'Name is required']
+        },
+        email: {
+            type: String,
+            required: [true, 'Email is required'],
+            unique: true
+        },
+        password: {
+            type: String,
+            required: [true, 'Password is required'],
+            trim: true,
+            minlength: [2, "The password is too short"],
+            maxlength: [20, "The password is too short"]
+        },
     },
-    email: {
-        type: String,
-        required: [true, 'Email is required'],
-        unique: true
-    },
-    password: {
-        type: String,
-        required: [true, 'Password is required'],
-        trim: true,
-        minlength: [2, "The password is too short"],
-        maxlength: [20, "The password is too short"]
-    },
-},
     { timestamps: true, versionKey: false }
 );
 
