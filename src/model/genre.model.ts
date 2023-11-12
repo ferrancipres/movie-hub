@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import { Document, model, Schema } from 'mongoose'
 //  He quitado Document...si fallo lo vuelvo a poner
 
 // Crear interface

@@ -11,11 +11,15 @@ export const getAllUsers = async (req: Request, res: Response) => {
     }
 };
 
+// Vamos a utilizar un mtodo que  se llama populate..para sacar la información del id..
+// que  cuando hagamos la busqueda de usuario en la relación con la movie salga la información..
+
 export const getUserById = async (req: Request, res: Response) => {
     const { userId } = req.params;
 
     try {
-        const user = await userModel.findById({ _id: userId });
+        // cuando con el  método populado.
+        const user = await userModel.findById({ _id: userId }).populate('movies');
 
         res.status(200).json(user);
     } catch (error) {

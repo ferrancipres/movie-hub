@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import movieModel from "../model/movie.model";
+import userModel from "../model/user.model";
 
 // Arrow function 'getAllMovies' => OK
 export const getAllMovies = async (req: Request, res: Response) => {
@@ -24,13 +25,20 @@ export const getMovieById = async (req: Request, res: Response) => {
     }
 };
 
+// cuando creemos una  movie..habrá que  asignarla al usuario ??
 export const createMovie = async (req: Request, res: Response) => {
     const { name, poster, score } = req.body;
+    const { userId } = req.params;
 
     try {
         if (!name || !poster || !score) throw new Error('Missing fields');
 
-        const newMovie = await movieModel.create({ name, poster, score });
+        const newMovie = await movieModel.create({ name, poster, score, userId });
+        await userModel.findByIdAndUpdate(
+            { _id: userId },
+            { $push: { movies: newMovie._id } }
+        );
+
         res.status(201).json(newMovie);
     } catch (error) {
         res.status(500).json(error);

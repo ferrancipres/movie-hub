@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import { Document, model, Schema } from 'mongoose'
 // He  quitado Document..si fall lo vuevlo a poner
 
 interface IMovieDocument {

@@ -6,8 +6,9 @@ const movieRouter = Router();
 
 movieRouter.get('/', getAllMovies);
 movieRouter.get('/:movieId', getMovieById);
-movieRouter.post('/', createMovie);
+movieRouter.post('/:userId', createMovie);
 movieRouter.patch('/:movieId', updateMovie);
 movieRouter.delete('/:movieId', deleteMovie);
+// delete general seria interesante..y para todas las rutas.. 
 
 export default movieRouter;
