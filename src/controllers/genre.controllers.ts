@@ -13,33 +13,34 @@ export const getAllGenres = async (req: Request, res: Response) => {
     }
 };
 
-// OK
-export const addGenreById = async (req: Request, res: Response) => {
+// HAY UN  ERROR
+export const addGenreToMovieById = async (req: Request, res: Response) => {
     const { movieId } = req.params;
     const { genreId } = req.body;
 
     try {
         const movie = await prisma.movies.findUnique({
-            where: { id: movieId }
+            where: { id: movieId },
         });
 
         if (!movie) {
             return res.status(404).json({ error: 'Movie not found' });
         }
 
-        const updateMovie = await prisma.movies.update({
+        const updatedMovie = await prisma.movies.update({
             where: { id: movieId },
             data: {
                 genres: {
-                    connect: { id: genreId }
+                    //AQUI ESTA EL ERROR
+                    connect: { id: genreId },
                 }
             }
         });
-        res.status(200).json(updateMovie);
+        res.status(200).json(updatedMovie);
     } catch (error) {
-        res.status(500).json(error)
+        res.status(500).json(error);
     }
-}
+};
 
 //  OK
 export const createGenre = async (req: Request, res: Response) => {
