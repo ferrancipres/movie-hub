@@ -3,10 +3,13 @@ import movieModel from "../model/movie.model";
 import userModel from "../model/user.model";
 import genreModel from "../model/genre.model";
 
+// NEW PRISMA
+import prisma from "../db/client";
+
 // Arrow function 'getAllMovies' => OK
 export const getAllMovies = async (req: Request, res: Response) => {
     try {
-        const movie = await movieModel.find();
+        const movie = await prisma.movie.findMany();
         res.status(200).json(movie);
 
     } catch (error) {
@@ -18,7 +21,15 @@ export const getMovieById = async (req: Request, res: Response) => {
     const { movieId } = req.params;
 
     try {
-        const movie = await movieModel.findById({ _id: movieId }).populate('genres');
+        // NEW PRISMA ..tengo dudas
+        const movie = await prisma.movie.findUnique({
+            where: { id: movieId },
+            include: {
+                genres: true
+            }
+        })
+        // _id: movieId 
+        // .populate('genres');
 
         res.status(200).json(movie);
     } catch (error) {
@@ -27,31 +38,50 @@ export const getMovieById = async (req: Request, res: Response) => {
 };
 
 // cuando creemos una  movie..habrá que  asignarla al usuario ??
+//NEW PRISMA - CUIDADO // ERROR
 export const createMovie = async (req: Request, res: Response) => {
     const { name, poster, score, genre } = req.body;
     const { userId } = req.params;
 
     try {
         // NEW 
-        const genreMovie = await genreModel.findOne({ name: genre });
+        const genreMovie = await prisma.genre.findUnique({
+            where: {
+                name: genre
+            },
+        });
 
         //  NEW
         if (!genreMovie) throw new Error('Genre not found');
         if (!name || !poster || !score) throw new Error('Missing fields');
 
-        const newMovie = await movieModel.create({ name, poster, score, genres: genreMovie._id, userId });
+        // CUIDADO hemos eliminado genres: genreMovie._id
+        const newMovie = await prisma.movie.create({
+            data: {
+                name,
+                poster,
+                score,
+                genres: {
+                    //cuidado hasta cambiado genreMovie._id
+                    connect: { id: genreMovie.id }
+                },
+                user: {
+                    connect: { id: userId }
+                },
+            }
+        });
 
-        //  NEW genre:....
-        await userModel.findByIdAndUpdate(
-            { _id: userId },
-            { $push: { movies: newMovie._id } }
-        );
+        // // //  NEW genre:....
+        // await userModel.findByIdAndUpdate(
+        //     { _id: userId },
+        //     { $push: { movies: newMovie._id } }
+        // );
 
-        //NEW
-        await genreModel.findByIdAndUpdate(
-            { _id: genreMovie._id },
-            { $push: { movies: newMovie._id } }
-        );
+        // //NEW
+        // await genreModel.findByIdAndUpdate(
+        //     { _id: genreMovie._id },
+        //     { $push: { movies: newMovie._id } }
+        // );
 
         res.status(201).json(newMovie);
     } catch (error) {
