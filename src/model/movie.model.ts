@@ -6,6 +6,7 @@ interface IMovieDocument {
     poster: string;
     // cuidado con el type number que prisma no lo reconoce
     score: number;
+    genres: string[];
     // campos extra que me gustaría añadir
     // year: number;
     // director: string;
@@ -29,7 +30,9 @@ const movieSchema = new Schema<IMovieDocument>(
         score: {
             type: Number,
             required: [true, 'Score is required']
-        }
+        },
+        // NEW
+        genres: [{ type: Schema.Types.ObjectId, ref: 'genre' }]
     },
     { timestamps: true, versionKey: false }
 );

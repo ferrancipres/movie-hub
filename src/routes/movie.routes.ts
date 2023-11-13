@@ -6,6 +6,7 @@ const movieRouter = Router();
 
 movieRouter.get('/', getAllMovies);
 movieRouter.get('/:movieId', getMovieById);
+// ¿Es correcto? 'userId' no haría falta en todas...
 movieRouter.post('/:userId', createMovie);
 movieRouter.patch('/:movieId', updateMovie);
 movieRouter.delete('/:movieId', deleteMovie);
