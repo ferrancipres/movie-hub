@@ -27,6 +27,8 @@ export const getUserById = async (req: Request, res: Response) => {
     }
 };
 
+// CAMBIAR CREATE USER..CON PRISMA
+
 export const createUser = async (req: Request, res: Response) => {
     const { name, email, password } = req.body;
 
