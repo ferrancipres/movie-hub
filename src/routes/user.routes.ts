@@ -2,7 +2,6 @@ import { Router } from "express";
 import { createUser, deleteUser, getAllUsers, getUserById, updateUser } from "../controllers/user.controllers";
 import { check } from "../middleware/check.middleware";
 
-// Invocar Routes..para crear un router
 const userRoutes = Router();
 
 userRoutes.get('/', getAllUsers);
