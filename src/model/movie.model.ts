@@ -3,6 +3,7 @@ import { Document, model, Schema } from 'mongoose'
 
 interface IMovieDocument {
     name: string;
+    // cuidado diferente de IVAN => string
     poster: string;
     // cuidado con el type number que prisma no lo reconoce
     score: number;
