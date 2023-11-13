@@ -39,8 +39,9 @@ export const createMovie = async (req: Request, res: Response) => {
         if (!genreMovie) throw new Error('Genre not found');
         if (!name || !poster || !score) throw new Error('Missing fields');
 
-        //  NEW genre:....
         const newMovie = await movieModel.create({ name, poster, score, genres: genreMovie._id, userId });
+
+        //  NEW genre:....
         await userModel.findByIdAndUpdate(
             { _id: userId },
             { $push: { movies: newMovie._id } }
