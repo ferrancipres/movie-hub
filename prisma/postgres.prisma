@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
     provider = "postgresql"
-    url      = env("MONGO_DB_URI")
+    url      = env("DATABASE_URL")
 }
 
 model User {
@@ -28,8 +28,11 @@ model Movies {
 
 model Genres {
     id     Int              @id @default(autoincrement())
+    name   String           @unique
     movies GenresOnMovies[]
 }
+
+// falta name..
 
 model GenresOnMovies {
     id      Int     @id @default(autoincrement())
