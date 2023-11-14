@@ -1,70 +1,41 @@
-import { Request, Response } from "express";
-import genreModel from "../model/genre.model";
-import userModel from "../model/user.model";
-import prisma from "../db/client";
+import { Request, Response } from 'express';
+import prisma from '../db/client';
 
-// OK
-export const getAllGenres = async (req: Request, res: Response) => {
-    try {
-        const genres = await prisma.genres.findMany();
-        res.status(200).json(genres)
-    } catch (error) {
-        res.status(500).json(error)
-    }
-};
-
-// HAY UN  ERROR
-export const addGenreToMovieById = async (req: Request, res: Response) => {
-    const { movieId } = req.params;
-    const { genreId } = req.body;
-
-    try {
-        const movie = await prisma.movies.findUnique({
-            where: { id: movieId },
-        });
-
-        if (!movie) {
-            return res.status(404).json({ error: 'Movie not found' });
-        }
-
-        const updatedMovie = await prisma.movies.update({
-            where: { id: movieId },
-            data: {
-                genres: {
-                    //AQUI ESTA EL ERROR
-                    connect: { id: genreId },
-                }
-            }
-        });
-        res.status(200).json(updatedMovie);
-    } catch (error) {
-        res.status(500).json(error);
-    }
-};
-
-//  OK
 export const createGenre = async (req: Request, res: Response) => {
     const { name } = req.body;
 
     try {
         const genre = await prisma.genres.create({ data: { name } });
-        res.status(200).json(genre);
+        res.status(201).json(genre);
     } catch (error) {
         res.status(500).json(error);
     }
-}
+};
 
-// OK
 export const deleteGenre = async (req: Request, res: Response) => {
     const { genreId } = req.params;
 
     try {
-        const deleteGenre = await prisma.genres.delete({
+        const deletedGenre = await prisma.genres.delete({
             where: { id: genreId }
         });
 
-        res.status(200).json(deleteGenre);
+        res.status(200).json(deletedGenre);
     } catch (error) {
-        res.status(500).json(error)
+        res.status(500).json(error);
     }
-}
+};
+
+export const allGenre = async (req: Request, res: Response) => {
+    try {
+        const genres = await prisma.genres.findMany({
+            select: {
+                name: true,
+                id: true
+            }
+        });
+        res.status(200).json(genres);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
