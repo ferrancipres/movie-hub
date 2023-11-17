@@ -1,22 +1,6 @@
 // dotenv para acceder a las variables de entorno
 import dotenv from 'dotenv'
-
-type TConfig = {
-    [key: string]: EnvironmentConfig;
-};
-
-type EnvironmentConfig = {
-    app: AppConfig;
-    db: MongoDBConfig;
-};
-
-type MongoDBConfig = {
-    URI: string;
-}
-
-type AppConfig = {
-    PORT: string | number;
-};
+import TConfig from '../interfaces/config.interfaces';
 
 //process.env nos permite accedes a las variables de entorno
 if (process.env.NODE_ENV === 'production') {
@@ -40,6 +24,11 @@ const CONFIG: TConfig = {
         db: {
             URI: process.env.MONGO_DB_URI ||
                 'mongodb://localhost:27017/test_development'
+        },
+        auth0: {
+            client_origin: process.env.APP_ORIGIN,
+            audience: process.env.AUTH0_AUDIENCE,
+            issuer: process.env.AUTH0_ISSUER,
         }
     },
     production: {

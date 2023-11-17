@@ -29,7 +29,6 @@ export const deleteGenre = async (req: Request, res: Response) => {
     }
 };
 
-//  DUDA
 export const allGenre = async (req: Request, res: Response) => {
     try {
         const genres = await prismaClient.genres.findMany({
