@@ -24,28 +24,6 @@ export const getAllUsers = async (req: Request, res: Response) => {
 };
 
 //  GETUSERBYEMAIL
-export const getUserById = async (req: Request, res: Response) => {
-    const { userId } = req.params;
-
-    try {
-        const user = await prismaClient.user.findUnique({
-            where: { id: converToType(userId) },
-            include: {
-                movies: {
-                    include: {
-                        genres: {
-                            select: { genre: { select: { name: true, id: true } } }
-                        },
-                    },
-                }
-            }
-        })
-
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json(error)
-    }
-};
 
 export const updateUser = async (req: Request, res: Response) => {
     const { userId } = req.params;
@@ -109,5 +87,28 @@ export const getUserByEmail = async (req: Request, res: Response) => {
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json(error);
+    }
+};
+
+export const getUserById = async (req: Request, res: Response) => {
+    const { userId } = req.params;
+
+    try {
+        const user = await prismaClient.user.findUnique({
+            where: { id: converToType(userId) },
+            include: {
+                movies: {
+                    include: {
+                        genres: {
+                            select: { genre: { select: { name: true, id: true } } }
+                        },
+                    },
+                }
+            }
+        })
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json(error)
     }
 };
