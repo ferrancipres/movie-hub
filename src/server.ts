@@ -13,8 +13,8 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
-app.use(morgan('dev')),
-    app.use('/user', userRoutes);
+app.use(morgan('dev'));
+app.use('/user', userRoutes);
 app.use('/movie', movieRoutes);
 app.use('/genre', genreRoutes);
 
