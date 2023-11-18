@@ -1,5 +1,3 @@
-// Servidor
-
 import express from 'express';
 import userRoutes from './routes/user.routes';
 import movieRoutes from './routes/movie.routes';
@@ -7,7 +5,6 @@ import genreRoutes from './routes/genre.routes';
 import cors from 'cors';
 import morgan from 'morgan';
 
-// invocar express
 const app = express();
 
 app.use(express.json());

@@ -5,9 +5,10 @@ import { checkJwtMiddleware } from "../middleware/checkJwt.middleware";
 const movieRouter = Router();
 
 movieRouter.get('/', getMovies);
-// FALTARIA CREAR GETMOVIESBYUSERID + CONTROLLER
 movieRouter.get('/:movieId', getMovieById);
+
 movieRouter.post('/:userId', checkJwtMiddleware, createMovie);
+
 movieRouter.patch('/:movieId', updateMovie);
 movieRouter.delete('/:movieId', deleteMovie);
 

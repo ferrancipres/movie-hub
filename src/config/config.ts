@@ -1,4 +1,3 @@
-// dotenv para acceder a las variables de entorno
 import dotenv from 'dotenv'
 import TConfig from '../interfaces/config.interfaces';
 
