@@ -120,7 +120,7 @@ export const createMovie = async (req: Request, res: Response) => {
                         },
                     })),
                 },
-                User: { connect: { id: userId } },
+                User: { connect: { id: converToType(userId) } },
             },
             include: {
                 genres: {

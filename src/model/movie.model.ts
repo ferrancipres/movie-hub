@@ -32,7 +32,7 @@ const movieSchema = new Schema<IMovieDocument>(
             type: Number,
             required: [true, 'Score is required']
         },
-        // NEW
+        //
         genres: [{ type: Schema.Types.ObjectId, ref: 'genre' }]
     },
     { timestamps: true, versionKey: false }

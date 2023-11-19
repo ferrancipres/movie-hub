@@ -23,7 +23,6 @@ export const getAllUsers = async (req: Request, res: Response) => {
     }
 };
 
-//  GETUSERBYEMAIL
 
 export const updateUser = async (req: Request, res: Response) => {
     const { userId } = req.params;
