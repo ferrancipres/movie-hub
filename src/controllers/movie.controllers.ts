@@ -63,7 +63,8 @@ export const updateMovie = async (req: Request, res: Response) => {
                 poster_image,
                 score,
                 genres: {
-                    create: newGenres.map((genre: { name: string; }) => ({
+                    //CUIDADO MIGUEL PELIGROSO newgenres
+                    create: genres.map((genre: { name: string; }) => ({
                         genre: {
                             connectOrCreate: {
                                 where: { name: genre.name },
@@ -101,7 +102,7 @@ export const deleteMovie = async (req: Request, res: Response) => {
 };
 
 export const createMovie = async (req: Request, res: Response) => {
-    const { name, poster_image, score, genres } = req.body;
+    const { name, poster_image, description, score, genres } = req.body;
     const { userId } = req.params;
 
     try {
