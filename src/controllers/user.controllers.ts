@@ -4,7 +4,6 @@ import { DATA_SOURCE, prismaClient } from '../db/client';
 import { converToType } from '../helpers/utils';
 
 export const getAllUsers = async (req: Request, res: Response) => {
-
     try {
         const allUsers = await prismaClient.user.findMany({
             include: {

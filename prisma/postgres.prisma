@@ -11,7 +11,7 @@ datasource db {
 model User {
     id       Int      @id @default(autoincrement())
     email    String   @unique
-    name     String   @unique
+    name     String
     password String
     movies   Movies[]
 }
@@ -31,8 +31,6 @@ model Genres {
     name   String           @unique
     movies GenresOnMovies[]
 }
-
-// falta name..
 
 model GenresOnMovies {
     id      Int     @id @default(autoincrement())

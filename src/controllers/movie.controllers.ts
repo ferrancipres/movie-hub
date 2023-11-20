@@ -42,7 +42,6 @@ export const updateMovie = async (req: Request, res: Response) => {
     const { name, poster_image, score, genres } = req.body;
 
     try {
-        // SI CAMBIO AQUI ME DA ERROR
         const existingMovie = await prismaClient.movies.findUnique({
             where: { id: converToType(movieId) },
             include: { genres: { select: { genre: { select: { name: true } } } } },
@@ -120,7 +119,7 @@ export const createMovie = async (req: Request, res: Response) => {
                         },
                     })),
                 },
-                User: { connect: { id: userId } },
+                User: { connect: { id: converToType(userId) } },
             },
             include: {
                 genres: {
