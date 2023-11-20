@@ -42,7 +42,6 @@ export const updateMovie = async (req: Request, res: Response) => {
     const { name, poster_image, score, genres } = req.body;
 
     try {
-        // SI CAMBIO AQUI ME DA ERROR
         const existingMovie = await prismaClient.movies.findUnique({
             where: { id: converToType(movieId) },
             include: { genres: { select: { genre: { select: { name: true } } } } },
@@ -53,7 +52,6 @@ export const updateMovie = async (req: Request, res: Response) => {
         }
 
         const existingGenres = existingMovie.genres.map((genre: { genre: { name: string } }) => genre.genre?.name).filter(Boolean);
-
         const newGenres = genres.filter((genre: { name: string; }) => !existingGenres.includes(genre.name));
 
         const updatedMovie = await prismaClient.movies.update({
@@ -63,8 +61,7 @@ export const updateMovie = async (req: Request, res: Response) => {
                 poster_image,
                 score,
                 genres: {
-                    //CUIDADO MIGUEL PELIGROSO newgenres
-                    create: genres.map((genre: { name: string; }) => ({
+                    create: newGenres.map((genre: { name: string; }) => ({
                         genre: {
                             connectOrCreate: {
                                 where: { name: genre.name },
@@ -102,7 +99,7 @@ export const deleteMovie = async (req: Request, res: Response) => {
 };
 
 export const createMovie = async (req: Request, res: Response) => {
-    const { name, poster_image, description, score, genres } = req.body;
+    const { name, poster_image, score, genres } = req.body;
     const { userId } = req.params;
 
     try {

@@ -6,9 +6,7 @@ const movieRouter = Router();
 
 movieRouter.get('/', getMovies);
 movieRouter.get('/:movieId', getMovieById);
-
 movieRouter.post('/:userId', createMovie);
-
 movieRouter.patch('/:movieId', updateMovie);
 movieRouter.delete('/:movieId', deleteMovie);
 
