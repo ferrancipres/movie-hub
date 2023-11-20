@@ -1,15 +1,12 @@
 import { Document, model, Schema } from 'mongoose'
-//  He quitado Document...si fallo lo vuelvo a poner
 
-// Crear interface
-interface IGenreDocument {
+interface IGenreDocument extends Document {
     name: string;
     movies: string[];
     createdAt?: Date;
     updatedAt?: Date;
 }
 
-// Dudas acerca la estructura del modelo..CUIDADO!
 const genreSchema = new Schema<IGenreDocument>(
     {
         name: {

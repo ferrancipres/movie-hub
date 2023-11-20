@@ -9,5 +9,4 @@ movieRouter.post('/:userId', createMovie);
 movieRouter.patch('/:movieId', updateMovie);
 movieRouter.delete('/:movieId', deleteMovie);
 
-
 export default movieRouter;

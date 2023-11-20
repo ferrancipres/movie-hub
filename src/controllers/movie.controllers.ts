@@ -49,7 +49,6 @@ export const updateMovie = async (req: Request, res: Response) => {
         }
 
         const existingGenres = existingMovie.genres.map((genre) => genre.genre?.name).filter(Boolean);
-
         const newGenres = genres.filter((genre: { name: string; }) => !existingGenres.includes(genre.name));
 
         const updatedMovie = await prisma.movies.update({

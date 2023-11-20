@@ -1,18 +1,10 @@
 import { Document, model, Schema } from 'mongoose'
-// He  quitado Document..si fall lo vuevlo a poner
 
-interface IMovieDocument {
+interface IMovieDocument extends Document {
     name: string;
-    // cuidado diferente de IVAN => string
-    poster: string;
-    // cuidado con el type number que prisma no lo reconoce
+    poster_image: string;
     score: number;
     genres: string[];
-    // campos extra que me gustaría añadir
-    // year: number;
-    // director: string;
-    // description: string;
-    // review: string;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -24,7 +16,7 @@ const movieSchema = new Schema<IMovieDocument>(
             type: String,
             required: [true, 'Name is required']
         },
-        poster: {
+        poster_image: {
             type: String,
             required: [true, 'Poster is  required']
         },
@@ -32,7 +24,6 @@ const movieSchema = new Schema<IMovieDocument>(
             type: Number,
             required: [true, 'Score is required']
         },
-        // NEW
         genres: [{ type: Schema.Types.ObjectId, ref: 'genre' }]
     },
     { timestamps: true, versionKey: false }
