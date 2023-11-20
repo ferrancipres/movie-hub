@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { createGenre, deleteGenre, getAllGenres, getGenreById, updateGenre } from "../controllers/genre.controllers";
 
-// Invocar Routes..para crear un  router
 const genreRouter = Router();
 
 genreRouter.get('/', getAllGenres);

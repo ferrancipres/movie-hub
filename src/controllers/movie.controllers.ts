@@ -3,7 +3,6 @@ import movieModel from "../model/movie.model";
 import userModel from "../model/user.model";
 import genreModel from "../model/genre.model";
 
-// Arrow function 'getAllMovies' => OK
 export const getAllMovies = async (req: Request, res: Response) => {
     try {
         const movie = await movieModel.find();
@@ -26,28 +25,27 @@ export const getMovieById = async (req: Request, res: Response) => {
     }
 };
 
-// cuando creemos una  movie..habrá que  asignarla al usuario ??
 export const createMovie = async (req: Request, res: Response) => {
     const { name, poster, score, genre } = req.body;
     const { userId } = req.params;
 
     try {
-        // NEW 
         const genreMovie = await genreModel.findOne({ name: genre });
-
-        //  NEW
         if (!genreMovie) throw new Error('Genre not found');
         if (!name || !poster || !score) throw new Error('Missing fields');
 
-        const newMovie = await movieModel.create({ name, poster, score, genres: genreMovie._id, userId });
+        const newMovie = await movieModel.create({
+            name,
+            poster,
+            score,
+            genres: genreMovie._id, userId
+        });
 
-        //  NEW genre:....
         await userModel.findByIdAndUpdate(
             { _id: userId },
             { $push: { movies: newMovie._id } }
         );
 
-        //NEW
         await genreModel.findByIdAndUpdate(
             { _id: genreMovie._id },
             { $push: { movies: newMovie._id } }

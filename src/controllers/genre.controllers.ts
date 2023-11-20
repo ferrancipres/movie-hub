@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import genreModel from "../model/genre.model";
 
-
-//Arrow function getAllGenres
 export const getAllGenres = async (req: Request, res: Response) => {
     try {
         const genre = await genreModel.find();

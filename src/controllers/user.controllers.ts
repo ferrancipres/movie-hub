@@ -3,7 +3,7 @@ import userModel from "../model/user.model";
 
 export const getAllUsers = async (req: Request, res: Response) => {
     try {
-        const user = await userModel.find();
+        const user = await userModel.find().populate('movies');
         res.status(200).json(user);
 
     } catch (error) {
@@ -11,14 +11,10 @@ export const getAllUsers = async (req: Request, res: Response) => {
     }
 };
 
-// Vamos a utilizar un mtodo que  se llama populate..para sacar la información del id..
-// que  cuando hagamos la busqueda de usuario en la relación con la movie salga la información..
-
 export const getUserById = async (req: Request, res: Response) => {
     const { userId } = req.params;
 
     try {
-        // cuando con el  método populado.
         const user = await userModel.findById({ _id: userId }).populate('movies');
 
         res.status(200).json(user);
@@ -46,7 +42,8 @@ export const updateUser = async (req: Request, res: Response) => {
     const { name, email, password } = req.body;
 
     try {
-        const user = await userModel.findByIdAndUpdate({ _id: userId },
+        const user = await userModel.findByIdAndUpdate(
+            { _id: userId },
             { $set: { name: name, email: email, password: password } },
             { new: true }
         );
@@ -64,7 +61,6 @@ export const deleteUser = async (req: Request, res: Response) => {
         const user = await userModel.findByIdAndDelete({ _id: userId });
 
         res.status(201).json(user);
-
     } catch (error) {
         res.status(500).json(error);
     }
